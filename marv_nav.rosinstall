@@ -1,11 +1,10 @@
 #GAVLAB ATRV
 - git:
-	local-name: gavlab_atrv
-	uri: https://github.com/DanPierce/gavlab_atrv.git
-	version: master
-
+    local-name: gavlab_atrv
+    uri: https://github.com/DanPierce/gavlab_atrv.git
+    version: master
 #
 - git:
-	local-name: marv_nav
-	uri: https://github.com/DanPierce/marv_nav.git
-	version: master
+    local-name: marv_nav
+    uri: https://github.com/DanPierce/marv_nav.git
+    version: master
