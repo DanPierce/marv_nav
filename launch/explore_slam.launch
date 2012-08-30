@@ -1,55 +1,50 @@
 <launch>
 	<master auto="start"/>
 
-  	<!-- Arguments -->
-  	<arg name="front_port" default="/dev/atrv_front_wheels" />
-  	<arg name="rear_port" default="/dev/atrv_rear_wheels" />
+  <!-- Arguments -->
+  <arg name="front_port" default="/dev/atrv_front_wheels" />
+  <arg name="rear_port" default="/dev/atrv_rear_wheels" />
 
  	<!-- Start the laser range finder -->
-  	<include file="$(find gavlab_atrv_launch)/launch/sick.launch"/>
+  <include file="$(find gavlab_atrv_launch)/launch/sick.launch"/>
 
-  	<!-- Start the node that interfaces with the motor controllers -->
-  	<node pkg="gavlab_atrv_node" type="atrv_node" name="atrv_node"
+  <!-- Start the node that interfaces with the motor controllers -->
+  <node pkg="gavlab_atrv_node" type="atrv_node" name="atrv_node"
         output="screen" required="true">
-    	<param name="front_port" value="$(arg front_port)" />
-    	<param name="rear_port" value="$(arg rear_port)" />
-  	</node>
+    <param name="front_port" value="$(arg front_port)" />
+    <param name="rear_port" value="$(arg rear_port)" />
+  </node>
 
-  	<node pkg="gavlab_atrv_2dnav" type="odom_to_tf.py" name="odom_to_tf"/>
+  <node pkg="gavlab_atrv_2dnav" type="odom_to_tf.py" name="odom_to_tf"/>
   
-  	<!-- Start the node that runs slam -->
-    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
-        <remap from="scan" to="scan_filtered"/>
-        <param name="delta" value="0.025"/>
-        <param name="xmin" value="-10"/>
-        <param name="xmax" value="10"/>
-        <param name="ymin" value="-10"/>
-        <param name="ymax" value="10"/>
-        <param name="temporalUpdate" value="0.1"/>
-    </node>
+  <!-- Start the node that runs slam -->
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <remap from="scan" to="scan_filtered"/>
+    <param name="delta" value="0.025"/>
+    <param name="xmin" value="-10"/>
+    <param name="xmax" value="10"/>
+    <param name="ymin" value="-10"/>
+    <param name="ymax" value="10"/>
+    <param name="temporalUpdate" value="0.1"/>
+  </node>
 
-  	<!-- Start the move_base Node -->
-  	<include file="$(find gavlab_atrv_2dnav)/launch/move_base_explore.launch" />
-
-  	<include file="$(find explore_stage)/explore_slam.xml" />
-
-  	<!-- Start the node that opens rviz -->
+  <!-- Start the node that opens rviz -->
 	<node pkg="rviz" name="visualization" type="rviz"/>
 
-  	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    	<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/footprint.yaml" command="load"/>
-    	<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/costmap_common.yaml" command="load" ns="global_costmap"/>
-    	<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/global_costmap.yaml" command="load"/>
-    	<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/navfn_params.yaml" command="load"/>
-    	<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/costmap_common.yaml" command="load" ns="local_costmap"/>
-    	<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/local_costmap.yaml" command="load"/>
-    	<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/trajectory_planner_params.yaml" command="load"/>
-  	</node>
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find marv_nav)/config/footprint.yaml" command="load"/>
+    <rosparam file="$(find marv_nav)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find marv_nav)/config/global_costmap.yaml" command="load"/>
+    <rosparam file="$(find marv_nav)/config/navfn_params.yaml" command="load"/>
+    <rosparam file="$(find marv_nav)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find marv_nav)/config/local_costmap.yaml" command="load"/>
+    <rosparam file="$(find marv_nav)/config/trajectory_planner_params.yaml" command="load"/>
+  </node>
   	
-  	<node pkg="explore" type="explore" respawn="false" name="explore" output="screen">
-		<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/footprint.yaml" command="load"/>
-		<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/costmap_common.yaml" command="load" ns="explore_costmap"/>
-		<rosparam file="$(find gavlab_atrv_2dnav)/config/explore/explore_costmap.yaml" command="load"/>
+  <node pkg="explore" type="explore" respawn="false" name="explore" output="screen">
+		<rosparam file="$(find marv_nav)/config/footprint.yaml" command="load"/>
+		<rosparam file="$(find marv_nav)/config/costmap_common.yaml" command="load" ns="explore_costmap"/>
+		<rosparam file="$(find marv_nav)/config/explore_costmap.yaml" command="load"/>
 		<param name="potential_scale" value="0.005"/>
 		<param name="orientation_scale" value="0.0"/>
 		<param name="gain_scale" value="1.0"/>
