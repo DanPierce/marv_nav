@@ -1,0 +1,15 @@
+<package>
+  <description brief="marv_nav">
+
+     marv_nav
+
+  </description>
+  <author>Gavlab User</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/marv_nav</url>
+  <depend package="move_base"/>
+
+</package>
+
+
