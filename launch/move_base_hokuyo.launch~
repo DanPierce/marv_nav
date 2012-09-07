@@ -27,6 +27,7 @@
     </node>
 
     <!-- Start the move_base Node -->
+    <include file="$(find gavlab_atrv_2dnav)/launch/move_base_slam.xml" />
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 		<rosparam file="$(find marv_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
 		<rosparam file="$(find marv_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
