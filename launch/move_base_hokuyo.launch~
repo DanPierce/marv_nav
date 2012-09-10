@@ -4,7 +4,11 @@
   <arg name="rear_port" default="/dev/atrv_rear_wheels" />
 
   <!-- Start the static transformations -->
-  <include file="$(find gavlab_atrv_launch)/launch/transforms.xml"/>
+   <param name="robot_description" command="$(find xacro)/xacro.py '$(find gavlab_atrv_description)/urdf/hokuyo_atrv.urdf.xacro'"/>
+   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+   <!-- <param name="use_gui" value="true"/> -->
+   </node>
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 
   <!-- Start the node that interfaces with the motor controllers -->
   <node pkg="gavlab_atrv_node" type="atrv_node" name="atrv_node"
