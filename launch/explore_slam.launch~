@@ -35,7 +35,7 @@
   </node>
 
   <!-- Start the node that opens rviz -->
-    <node name="rviz" pkg="rviz" type="rviz" required="true" output="screen" args="-d $(find marv_launch)/cfg/move_base.vcg" />
+    <node name="rviz" pkg="rviz" type="rviz" required="true" output="screen" args="-d $(find marv_launch)/cfg/hokuyo.vcg" />
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find marv_nav)/config/footprint.yaml" command="load"/>

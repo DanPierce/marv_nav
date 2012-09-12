@@ -11,5 +11,5 @@ lethal_cost_threshold: 100
 
 observation_sources: hokuyo_laser_scan_sensor
 
-base_scan: {sensor_frame: laser_link, topic: scan_filtered, data_type: LaserScan, expected_update_rate: 0.2,
+base_scan: {sensor_frame: laser_link, topic: scan, data_type: LaserScan, expected_update_rate: 0.2,
   observation_persistance: 0.0, marking: true, clearing: true}

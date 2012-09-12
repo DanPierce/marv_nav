@@ -31,19 +31,9 @@
     </node>
 
     <!-- Start the move_base Node -->
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-		<rosparam file="$(find marv_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
-		<rosparam file="$(find marv_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
-		<rosparam file="$(find marv_nav)/config/local_costmap_params.yaml" command="load"/>
-		<rosparam file="$(find marv_nav)/config/global_costmap_params.yaml" command="load"/>
-		<rosparam file="$(find marv_nav)/config/base_local_planner_params.yaml" command="load"/>
-		<rosparam file="$(find marv_nav)/config/navfn_params.yaml" command="load"/>
-		<remap from="cmd_vel" to="atrv_node/cmd_vel"/>
-	</node>
+    <include file="$(find gavlab_atrv_2dnav)/launch/move_base_slam.xml" />
 
     <!-- <arg nam="output_frame" default="laser"/> -->
-
-    <param name="use_rep_117" value="true"/>
 
     <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node" respawn="true">
         <!-- his option will speed up the startup of the driver, but will lead to less acurate timestamps -->
