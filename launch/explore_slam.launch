@@ -4,6 +4,13 @@
   <!-- Arguments -->
   <arg name="front_port" default="/dev/atrv_front_wheels" />
   <arg name="rear_port" default="/dev/atrv_rear_wheels" />
+  
+   <!-- Start the static transformations -->
+   <param name="robot_description" command="$(find xacro)/xacro.py '$(find gavlab_atrv_description)/urdf/hokuyo_atrv.urdf.xacro'"/>
+   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+   <!-- <param name="use_gui" value="true"/> -->
+   </node>
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 
  	<!-- Start the laser range finder -->
     <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node" respawn="true">
@@ -38,13 +45,13 @@
     <node name="rviz" pkg="rviz" type="rviz" required="true" output="screen" args="-d $(find marv_launch)/cfg/move_base.vcg" />
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <rosparam file="$(find marv_nav)/config/footprint.yaml" command="load"/>
-    <rosparam file="$(find marv_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
-    <rosparam file="$(find marv_nav)/config/global_costmap_params.yaml" command="load"/>
-    <rosparam file="$(find marv_nav)/config/navfn_params.yaml" command="load"/>
-    <rosparam file="$(find marv_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
-    <rosparam file="$(find marv_nav)/config/local_costmap_params.yaml" command="load"/>
-    <rosparam file="$(find marv_nav)/config/trajectory_planner_params.yaml" command="load"/>
+	<rosparam file="$(find marv_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+	<rosparam file="$(find marv_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+	<rosparam file="$(find gavlab_atrv_2dnav)/config/slam/local_costmap_params.yaml" command="load"/>
+	<rosparam file="$(find gavlab_atrv_2dnav)/config/slam/global_costmap_params.yaml" command="load"/>
+	<rosparam file="$(find gavlab_atrv_2dnav)/config/slam/base_local_planner_params.yaml" command="load"/>
+	<rosparam file="$(find gavlab_atrv_2dnav)/config/slam/navfn_params.yaml" command="load"/>
+	<remap from="cmd_vel" to="atrv_node/cmd_vel"/>
   </node>
   	
   <node pkg="explore" type="explore" respawn="false" name="explore" output="screen">
